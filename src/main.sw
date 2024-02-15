@@ -9,9 +9,7 @@ use libraries::{AMM, Exchange};
 use std::{constants::BASE_ASSET_ID, external::bytecode_root, hash::Hash};
 
 storage {
-    /// The valid exchange contract bytecode root.
     exchange_bytecode_root: Option<b256> = Option::None,
-    /// Map that stores pools, i.e., asset identifier pairs as keys and corresponding exchange contract identifiers as values.
     pools: StorageMap<(AssetId, AssetId), ContractId> = StorageMap {},
 }
 
@@ -60,7 +58,7 @@ impl AMM for Contract {
         let ordered_asset_pair = if asset_pair.0.into() < asset_pair.1.into() {
             asset_pair
         } else {
-            (asset_pair.1, asset_pair.0)
+            (asset_pair.0, asset_pair.1)
         };
 
         storage.pools.insert(ordered_asset_pair, pool);
@@ -76,7 +74,7 @@ impl AMM for Contract {
         let ordered_asset_pair = if asset_pair.0.into() < asset_pair.1.into() {
             asset_pair
         } else {
-            (asset_pair.1, asset_pair.0)
+            (asset_pair.0, asset_pair.1)
         };
         storage.pools.get(ordered_asset_pair).try_read()
     }
