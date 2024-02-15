@@ -8,7 +8,14 @@ pub struct RegisterPoolEvent {
     pool: ContractId,
 }
 
-// TODO: Remove this when its automatically implemented
+/// The information logged when an exchange bytecode root is set.
+pub struct TrackExchangeBytecodeRootEvent {
+    /// The bytecode root of the valid exchange contract implementation.
+    root: b256,
+    oldr_root: b256,
+}
+
+
 impl AbiEncode for RegisterPoolEvent {
     fn abi_encode(self, ref mut buffer: Buffer) {
         buffer.push(self.asset_pair.0);
